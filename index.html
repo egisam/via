@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mood Buat Kamu</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family: "Comic Sans MS", cursive;
+background:linear-gradient(135deg,#ffc0cb,#ff9ecb);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+}
+
+.container{
+background:white;
+padding:35px;
+border-radius:25px;
+width:340px;
+max-width:90%;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+z-index:2;
+}
+
+h2{
+margin-bottom:15px;
+color:#ff4b8a;
+}
+
+p{
+color:#666;
+font-size:14px;
+margin-bottom:10px;
+}
+
+input,select,textarea{
+width:100%;
+padding:10px;
+border-radius:12px;
+border:1px solid #ffd6e7;
+margin:8px 0;
+}
+
+textarea{
+height:70px;
+resize:none;
+}
+
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:15px;
+background:#ff6fa5;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#ff4b8a;
+transform:scale(1.05);
+}
+
+/* animasi hati */
+
+.heart{
+position:fixed;
+top:-20px;
+font-size:20px;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh);
+opacity:0;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🐻 Mood via 🐰</h2>
+<p>sharing mood with egi 💌</p>
+
+<form id="moodForm">
+
+<input type="text" name="nama" placeholder="Nama kamu">
+
+<select name="mood">
+<option>🥰 Lagi sayang kamu</option>
+<option>😊 Lagi happy</option>
+<option>😴 Lagi capek</option>
+<option>😢 Lagi sedih</option>
+<option>🤗 Lagi kangen</option>
+</select>
+
+<textarea name="pesan" placeholder="Tulis pesan buat egi"></textarea>
+
+<button type="submit">Kirim ke egi 💖</button>
+
+</form>
+
+</div>
+
+<script>
+
+const form = document.getElementById("moodForm");
+
+function createHeart(){
+const heart = document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="💗";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(Math.random()*2+2)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},4000);
+}
+
+form.addEventListener("submit", function(e){
+e.preventDefault();
+
+/* kirim ke formspree */
+fetch("https://formspree.io/f/xojkakkg",{
+method:"POST",
+body:new FormData(form),
+headers:{
+'Accept':'application/json'
+}
+});
+
+/* animasi hati */
+for(let i=0;i<25;i++){
+setTimeout(createHeart,i*100);
+}
+
+/* pindah halaman setelah animasi */
+setTimeout(()=>{
+window.location.href="thanks.html";
+},2500);
+
+});
+
+</script>
+
+</body>
+</html>
